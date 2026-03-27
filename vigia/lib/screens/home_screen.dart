@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import '../core/app_colors.dart';
+import '../core/theme_manager.dart';
 import '../widgets/background_wrapper.dart';
 import '../widgets/neon_card.dart';
-import '../widgets/neon_typewriter.dart'; // Importe o widget novo
+import '../widgets/neon_typewriter.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -17,11 +19,10 @@ class HomeScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          toolbarHeight: 120.h, // Aumentado para caber o título maior
+          toolbarHeight: 120.h,
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // NOME DO APP ESTILIZADO E MAIOR
               Text(
                 "VIGIA",
                 style: TextStyle(
@@ -34,7 +35,6 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              // EFEITO DE DIGITAÇÃO NA SAUDAÇÃO
               NeonTypewriter(
                 texts: const [
                   "Bem vindo(a), Gabriela",
@@ -54,7 +54,9 @@ class HomeScreen extends StatelessWidget {
               padding: EdgeInsets.only(right: 10.w),
               child: IconButton(
                 icon: Icon(Icons.notifications_none, color: primary, size: 28.r),
-                onPressed: () {},
+                onPressed: () {
+                  print("Notificações clicadas");
+                },
               ),
             )
           ],
@@ -65,7 +67,7 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Daily Route Overview",
+                "Visão Geral da Rota Diária",
                 style: TextStyle(
                   color: isDark ? Colors.white : Colors.black,
                   fontSize: 18.sp,
@@ -85,11 +87,20 @@ class HomeScreen extends StatelessWidget {
               
               SizedBox(height: 30.h),
               
-              _buildActionButton("START ROUTE", context),
+              // BOTÃO INICIAR: Agora com print para debug no console
+              _buildActionButton(
+                "INICIAR ROTA", 
+                context, 
+                onTap: () {
+                  print("Botão Iniciar Rota pressionado!");
+                  context.read<ThemeManager>().setIndex(1);
+                },
+              ),
+              
               SizedBox(height: 15.h),
-              _buildActionButton("PAUSE", context),
+              _buildActionButton("PAUSAR", context, onTap: () => print("Pausar")),
               SizedBox(height: 15.h),
-              _buildActionButton("END ROUTE", context),
+              _buildActionButton("ENCERRAR ROTA", context, onTap: () => print("Encerrar")),
             ],
           ),
         ),
@@ -114,22 +125,34 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButton(String label, BuildContext context) {
+  Widget _buildActionButton(String label, BuildContext context, {required VoidCallback onTap}) {
     Color primary = AppColors.getPrimary(context);
-    return Container(
-      width: double.infinity,
-      height: 55.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.r),
-        border: Border.all(color: primary, width: 2.w),
-        boxShadow: [
-          BoxShadow(color: primary.withOpacity(0.2), blurRadius: 10.r),
-        ],
-      ),
-      child: Center(
-        child: Text(
-          label,
-          style: TextStyle(color: primary, fontWeight: FontWeight.bold, fontSize: 16.sp),
+    
+    return Padding(
+      padding: EdgeInsets.only(bottom: 5.h),
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque, // GARANTE QUE O CLIQUE FUNCIONE EM TODA A ÁREA
+        child: Container(
+          width: double.infinity,
+          height: 55.h,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.r),
+            border: Border.all(color: primary, width: 2.w),
+            boxShadow: [
+              BoxShadow(color: primary.withOpacity(0.2), blurRadius: 10.r),
+            ],
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                color: primary, 
+                fontWeight: FontWeight.bold, 
+                fontSize: 16.sp,
+              ),
+            ),
+          ),
         ),
       ),
     );

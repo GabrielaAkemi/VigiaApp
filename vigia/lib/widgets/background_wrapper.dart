@@ -38,7 +38,7 @@ class BackgroundWrapper extends StatelessWidget {
                 opacity: 0.02,
                 child: Image.asset(
                   'assets/logo_vigia.png',
-                  width: MediaQuery.of(context).size.width * 0.75,
+                  width: MediaQuery.of(context).size.width * 1.0,
                 ),
               ),
             ),

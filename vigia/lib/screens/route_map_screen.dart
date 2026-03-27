@@ -14,7 +14,7 @@ class RouteMapScreen extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: Text("Route Map", style: TextStyle(color: isDark ? Colors.white : Colors.black)),
+          title: Text("Mapa de Rota", style: TextStyle(color: isDark ? Colors.white : Colors.black)),
           actions: [IconButton(icon: const Icon(Icons.location_on), onPressed: () {})],
         ),
         body: Stack(
@@ -35,8 +35,8 @@ class RouteMapScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _buildMapStat("NEXT STOP", "4 MIN"),
-                    _buildMapStat("PASSENGER", "ANNA S."),
+                    _buildMapStat("PRÓXIMA PARADA", "4 MIN"),
+                    _buildMapStat("PASSAGEIRO", "ANNA S."),
                   ],
                 ),
               ),

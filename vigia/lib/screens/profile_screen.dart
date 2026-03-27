@@ -25,15 +25,9 @@ class ProfileScreen extends StatelessWidget {
           centerTitle: true,
           leading: const SizedBox.shrink(), 
           title: Text(
-            "Driver Profile",
+            "Perfil do Motorista",
             style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 15),
-              child: Icon(Icons.settings_outlined, color: primaryColor),
-            )
-          ],
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
@@ -99,9 +93,9 @@ class ProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 25),
 
-              _buildProfileItem("Name", "Burman Smith", context, canEdit: true),
+              _buildProfileItem("Nome", "Burman Smith", context, canEdit: true),
               _buildProfileItem("Email", "infer@develominates.com", context),
-              _buildProfileItem("Assigned Ambulance", "Ambulance (Rvigo 11/32)", context, 
+              _buildProfileItem("Ambulância Atribuída", "Ambulância (Rvigo 11/32)", context, 
                   icon: Icons.emergency_outlined),
               
               const SizedBox(height: 10),
@@ -112,7 +106,7 @@ class ProfileScreen extends StatelessWidget {
                     Icon(Icons.airport_shuttle, color: primaryColor, size: 30),
                     const SizedBox(width: 15),
                     Text(
-                      "Ambulance 120", 
+                      "Ambulância 120", 
                       style: TextStyle(color: textColor, fontWeight: FontWeight.w500)
                     ),
                   ],
@@ -123,9 +117,9 @@ class ProfileScreen extends StatelessWidget {
 
               Row(
                 children: [
-                  Expanded(child: _buildStatItem("Routes Completed", "5", context)),
+                  Expanded(child: _buildStatItem("Rotas Concluídas", "5", context)),
                   const SizedBox(width: 15),
-                  Expanded(child: _buildStatItem("Hours Logged", "12.h", context)),
+                  Expanded(child: _buildStatItem("Horas Registradas", "12.h", context)),
                 ],
               ),
             ],

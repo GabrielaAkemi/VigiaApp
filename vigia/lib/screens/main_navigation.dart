@@ -1,36 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../core/app_colors.dart';
-import 'home_screen.dart'; // Tela com as rotas e botões
+import '../core/theme_manager.dart';
+import 'home_screen.dart';
 import 'route_map_screen.dart';
 import 'profile_screen.dart';
 import 'dashboard_screen.dart';
 
-class MainNavigation extends StatefulWidget {
-  @override
-  State<MainNavigation> createState() => _MainNavigationState();
-}
-
-class _MainNavigationState extends State<MainNavigation> {
-  int _selectedIndex = 0;
-
-  // Lista das telas na ordem da NavBar
+class MainNavigation extends StatelessWidget {
   final List<Widget> _screens = [
-    HomeScreen(),      // Tela Principal (Vigia + Rotas)
-    RouteMapScreen(),   // Mapa
-    ProfileScreen(),    // Perfil (Onde troca o tema)
-    DashboardScreen(),  // Dashboard
+    HomeScreen(),
+    RouteMapScreen(),
+    ProfileScreen(),
+    DashboardScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = Theme.of(context).brightness == Brightness.dark;
+    final themeProvider = context.watch<ThemeManager>();
+    bool isDark = themeProvider.themeMode == ThemeMode.dark;
     Color primary = AppColors.getPrimary(context);
 
     return Scaffold(
-      body: _screens[_selectedIndex],
+      body: _screens[themeProvider.selectedIndex], 
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: (index) => setState(() => _selectedIndex = index),
+        currentIndex: themeProvider.selectedIndex,
+        onTap: (index) => themeProvider.setIndex(index),
         type: BottomNavigationBarType.fixed,
         backgroundColor: AppColors.getBackground(context),
         selectedItemColor: primary,

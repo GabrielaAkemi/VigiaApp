@@ -20,7 +20,7 @@ class DashboardScreen extends StatelessWidget {
           elevation: 0,
           centerTitle: true,
           title: Text(
-            "Rides Dashboard",
+            "Painel Dashboard",
             style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 18.sp),
           ),
           actions: [
@@ -36,9 +36,9 @@ class DashboardScreen extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Expanded(child: _buildSmallStat("Rides Today", "9", context)),
+                  Expanded(child: _buildSmallStat("Rotas de Hoje", "9", context)),
                   SizedBox(width: 15.w),
-                  Expanded(child: _buildSmallStat("Passengers", "2", context)),
+                  Expanded(child: _buildSmallStat("Passageiros", "2", context)),
                 ],
               ),
               SizedBox(height: 20.h),
@@ -50,14 +50,14 @@ class DashboardScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Average Response Time", 
+                      Text("Tempo Médio de Cada Rota", 
                         style: TextStyle(color: Colors.grey, fontSize: 12.sp)),
                       SizedBox(height: 10.h),
                       Expanded(child: _buildBezierChart(context)),
                       SizedBox(height: 10.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                        children: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom']
                             .map((day) => Text(day, style: TextStyle(color: Colors.grey, fontSize: 10.sp)))
                             .toList(),
                       )
@@ -67,9 +67,9 @@ class DashboardScreen extends StatelessWidget {
               ),
               SizedBox(height: 20.h),
 
-              _buildInfoTile("Total Kilometers", "20.3 km", context),
+              _buildInfoTile("Quilometros Totais", "20.3 km", context),
               SizedBox(height: 12.h),
-              _buildInfoTile("Average Response Time", "13s", context),
+              _buildInfoTile("Tempo Médio de Resposta", "13s", context),
               
               SizedBox(height: 10.h), 
             ],
