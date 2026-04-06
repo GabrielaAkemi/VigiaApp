@@ -6,7 +6,6 @@ import '../widgets/background_wrapper.dart';
 import '../widgets/neon_card.dart';
 
 class DashboardScreen extends StatelessWidget {
-  // CORREÇÃO: Adicionada a named key ao construtor
   const DashboardScreen({super.key});
 
   @override
@@ -44,10 +43,8 @@ class DashboardScreen extends StatelessWidget {
                   Expanded(child: _buildSmallStat("Passageiros", "2", context)),
                 ],
               ),
-              // CORREÇÃO: Adicionado const no SizedBox
               const SizedBox(height: 20),
 
-              // CARD DO GRÁFICO BEZIER (ONDA)
               Expanded(
                 child: NeonCard(
                   padding: EdgeInsets.all(20.r),
@@ -69,11 +66,9 @@ class DashboardScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              // CORREÇÃO: Adicionado const no SizedBox
               const SizedBox(height: 20),
 
               _buildInfoTile("Quilometros Totais", "20.3 km", context),
-              // CORREÇÃO: Adicionado const no SizedBox
               const SizedBox(height: 12),
               _buildInfoTile("Tempo Médio de Resposta", "13s", context),
               
@@ -105,7 +100,6 @@ class DashboardScreen extends StatelessWidget {
               show: true,
               gradient: LinearGradient(
                 colors: [
-                  // CORREÇÃO: withOpacity -> withValues
                   primary.withValues(alpha: 0.5),
                   primary.withValues(alpha: 0.0),
                 ],

@@ -55,12 +55,10 @@ class _NeonTypewriterState extends State<NeonTypewriter> {
             });
           }
         } else {
-          // Apagando
           if (_currentCharIndex > 0) {
             _currentCharIndex--;
             _displayedText = currentFullText.substring(0, _currentCharIndex);
           } else {
-            // Muda para a próxima frase
             _isDeleting = false;
             _currentTextIndex = (_currentTextIndex + 1) % widget.texts.length;
             _timer?.cancel();

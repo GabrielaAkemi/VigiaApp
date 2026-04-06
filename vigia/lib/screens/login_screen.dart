@@ -6,7 +6,6 @@ import '../widgets/background_wrapper.dart';
 import 'main_navigation.dart';
 
 class LoginScreen extends StatelessWidget {
-  // CORREÇÃO: Adicionada a named key ao construtor
   const LoginScreen({super.key});
 
   @override
@@ -17,18 +16,18 @@ class LoginScreen extends StatelessWidget {
     return BackgroundWrapper(
       child: Scaffold(
         backgroundColor: Colors.transparent, 
-        body: SingleChildScrollView( // Adicionado para evitar erro de overflow ao abrir teclado
+        body: SingleChildScrollView( 
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.w), // .w para largura
+            padding: EdgeInsets.symmetric(horizontal: 30.w), 
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 120.h), // Espaço inicial responsivo
+                SizedBox(height: 120.h), 
                 Text(
                   "Vigia",
                   style: TextStyle(
                     color: primaryColor,
-                    fontSize: 70.sp, // .sp para fontes escaláveis
+                    fontSize: 70.sp, 
                     fontWeight: FontWeight.bold,
                     shadows: [
                       Shadow(
@@ -39,7 +38,7 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 60.h), // .h para altura
+                SizedBox(height: 60.h), 
                 _buildInput("EMAIL", context),
                 SizedBox(height: 20.h),
                 _buildInput("PASSWORD", context, isPassword: true),
@@ -49,12 +48,11 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      // CORREÇÃO: Adicionado const no MainNavigation
                       MaterialPageRoute(builder: (context) => const MainNavigation()),
                     );
                   }
                 ),
-                SizedBox(height: 40.h), // Espaço final para respiro
+                SizedBox(height: 40.h), 
               ],
             ),
           ),
@@ -78,13 +76,12 @@ class LoginScreen extends StatelessWidget {
         ),
         SizedBox(height: 8.h),
         Container(
-          height: 55.h, // Altura do campo responsiva
+          height: 55.h, 
           padding: EdgeInsets.symmetric(horizontal: 15.w),
           decoration: BoxDecoration(
             color: isDark ? AppColors.darkDeepRed : Colors.white,
             borderRadius: BorderRadius.circular(15.r),
             border: Border.all(
-              // CORREÇÃO: withOpacity -> withValues
               color: AppColors.getPrimary(context).withValues(alpha: 0.5)
             ),
           ),

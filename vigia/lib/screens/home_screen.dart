@@ -8,7 +8,6 @@ import '../widgets/neon_card.dart';
 import '../widgets/neon_typewriter.dart';
 
 class HomeScreen extends StatelessWidget {
-  // CORREÇÃO: Adicionada a named key ao construtor
   const HomeScreen({super.key});
 
   @override
@@ -34,7 +33,6 @@ class HomeScreen extends StatelessWidget {
                   fontSize: 38.sp,
                   letterSpacing: 4,
                   shadows: [
-                    // CORREÇÃO: withOpacity -> withValues
                     Shadow(color: primary.withValues(alpha: 0.7), blurRadius: 15.r),
                   ],
                 ),
@@ -59,7 +57,6 @@ class HomeScreen extends StatelessWidget {
               child: IconButton(
                 icon: Icon(Icons.notifications_none, color: primary, size: 28.r),
                 onPressed: () {
-                  // CORREÇÃO: Removido print para evitar aviso de produção
                 },
               ),
             )
@@ -142,7 +139,6 @@ class HomeScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(15.r),
             border: Border.all(color: primary, width: 2.w),
             boxShadow: [
-              // CORREÇÃO: withOpacity -> withValues
               BoxShadow(color: primary.withValues(alpha: 0.2), blurRadius: 10.r),
             ],
           ),

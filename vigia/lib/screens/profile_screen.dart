@@ -6,7 +6,6 @@ import '../widgets/background_wrapper.dart';
 import '../widgets/neon_card.dart';
 
 class ProfileScreen extends StatelessWidget {
-  // CORREÇÃO: Adicionada a Key no construtor
   const ProfileScreen({super.key});
 
   @override
@@ -16,7 +15,6 @@ class ProfileScreen extends StatelessWidget {
     Color primaryColor = AppColors.getPrimary(context);
     
     Color textColor = isDark ? Colors.white : Colors.black;
-    // CORREÇÃO: Removido o aviso de subTextColor não utilizado (ou use se preferir)
 
     return BackgroundWrapper(
       child: Scaffold(
@@ -47,7 +45,6 @@ class ProfileScreen extends StatelessWidget {
                         border: Border.all(color: primaryColor, width: 2),
                         boxShadow: [
                           BoxShadow(
-                            // CORREÇÃO: withOpacity -> withValues
                             color: primaryColor.withValues(alpha: isDark ? 0.4 : 0.2),
                             blurRadius: 15,
                           )
@@ -62,7 +59,6 @@ class ProfileScreen extends StatelessWidget {
                       right: 5,
                       bottom: 5,
                       child: GestureDetector(
-                        // CORREÇÃO: Removido print (boa prática para produção)
                         onTap: () {}, 
                         child: CircleAvatar(
                           radius: 12,
@@ -88,7 +84,6 @@ class ProfileScreen extends StatelessWidget {
                     style: TextStyle(color: textColor, fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   trailing: Switch(
-                    // CORREÇÃO: activeColor -> activeThumbColor
                     activeThumbColor: AppColors.lightRed,
                     value: !isDark,
                     onChanged: (value) => context.read<ThemeManager>().toggleTheme(),
@@ -166,7 +161,6 @@ class ProfileScreen extends StatelessWidget {
               ),
             ],
           ),
-          // CORREÇÃO: withOpacity -> withValues
           Divider(color: primaryColor.withValues(alpha: 0.2), thickness: 1),
         ],
       ),

@@ -22,9 +22,7 @@ class VigiaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = context.watch<ThemeManager>();
 
-    // O ScreenUtilInit deve envolver o MaterialApp para a responsividade funcionar
     return ScreenUtilInit(
-      // DesignSize é o tamanho base do seu protótipo (largura, altura)
       designSize: const Size(390, 844), 
       minTextAdapt: true,
       splitScreenMode: true,
@@ -34,7 +32,7 @@ class VigiaApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           themeMode: themeProvider.themeMode,
 
-          // --- CONFIGURAÇÃO DO MODO DIURNO (Light) ---
+          // --- CONFIGURAÇÃO DO MODO DIURNO ---
           theme: ThemeData(
             brightness: Brightness.light,
             scaffoldBackgroundColor: AppColors.lightBg,
@@ -47,7 +45,7 @@ class VigiaApp extends StatelessWidget {
             ),
           ),
 
-          // --- CONFIGURAÇÃO DO MODO NOTURNO (Dark Neon) ---
+          // --- CONFIGURAÇÃO DO MODO NOTURNO ---
           darkTheme: ThemeData(
             brightness: Brightness.dark,
             scaffoldBackgroundColor: AppColors.darkBg,
@@ -60,11 +58,9 @@ class VigiaApp extends StatelessWidget {
             ),
           ),
           
-          // O 'child' aqui refere-se ao LoginScreen definido abaixo
           home: child,
         );
       },
-      // CORREÇÃO: Adicionado 'const' aqui para melhorar a performance
       child: const LoginScreen(),
     );
   }

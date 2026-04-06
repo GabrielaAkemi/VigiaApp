@@ -26,7 +26,6 @@ class NeonCard extends StatelessWidget {
         color: AppColors.getCardColor(context),
         borderRadius: BorderRadius.circular(borderRadius.r), 
         border: Border.all(
-          // ATUALIZADO: Substituído withOpacity por withValues
           color: primary.withValues(alpha: 0.8), 
           width: 1.5.w, 
         ),
