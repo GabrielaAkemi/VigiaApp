@@ -8,7 +8,11 @@ import 'profile_screen.dart';
 import 'dashboard_screen.dart';
 
 class MainNavigation extends StatelessWidget {
-  final List<Widget> _screens = [
+  // CORREÇÃO: Adicionada a named key ao construtor
+  const MainNavigation({super.key});
+
+  // CORREÇÃO: Adicionado 'const' em cada tela da lista para melhorar a performance
+  final List<Widget> _screens = const [
     HomeScreen(),
     RouteMapScreen(),
     ProfileScreen(),
@@ -17,11 +21,13 @@ class MainNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Usamos context.watch para escutar as mudanças de índice do ThemeManager
     final themeProvider = context.watch<ThemeManager>();
     bool isDark = themeProvider.themeMode == ThemeMode.dark;
     Color primary = AppColors.getPrimary(context);
 
     return Scaffold(
+      // Exibe a tela baseada no índice selecionado no Provider
       body: _screens[themeProvider.selectedIndex], 
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: themeProvider.selectedIndex,

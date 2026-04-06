@@ -25,7 +25,8 @@ class NeonButton extends StatelessWidget {
           gradient: LinearGradient(colors: gradientColors),
           boxShadow: [
             BoxShadow(
-              color: gradientColors.last.withOpacity(0.6),
+              // ATUALIZADO: Substituído withOpacity por withValues(alpha: ...)
+              color: gradientColors.last.withValues(alpha: 0.6),
               blurRadius: 15,
               offset: const Offset(0, 4),
             ),

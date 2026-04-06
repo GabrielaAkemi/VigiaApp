@@ -15,12 +15,17 @@ dependencies:
   # --- GERENCIAMENTO DE ESTADO E TEMAS ---
   provider: ^6.1.1
 
-  # --- RESPONSIVIDADE (Ajusta o layout para qualquer tela) ---
+  # --- RESPONSIVIDADE ---
   flutter_screenutil: ^5.9.3
 
   # --- INTERFACE E GRÁFICOS ---
   google_fonts: ^6.1.0
-  fl_chart: ^0.69.0  # Necessário para o gráfico do Dashboard
+  fl_chart: ^0.69.0
+
+  # --- MAPAS E NAVEGAÇÃO ---
+  flutter_map: ^6.1.0
+  latlong2: ^0.9.1
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -30,6 +35,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  # --- ATIVOS DO PROJETO ---
   assets:
     - assets/logo_vigia.png

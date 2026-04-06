@@ -6,6 +6,9 @@ import '../widgets/background_wrapper.dart';
 import '../widgets/neon_card.dart';
 
 class DashboardScreen extends StatelessWidget {
+  // CORREÇÃO: Adicionada a named key ao construtor
+  const DashboardScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
@@ -41,7 +44,8 @@ class DashboardScreen extends StatelessWidget {
                   Expanded(child: _buildSmallStat("Passageiros", "2", context)),
                 ],
               ),
-              SizedBox(height: 20.h),
+              // CORREÇÃO: Adicionado const no SizedBox
+              const SizedBox(height: 20),
 
               // CARD DO GRÁFICO BEZIER (ONDA)
               Expanded(
@@ -65,13 +69,15 @@ class DashboardScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20.h),
+              // CORREÇÃO: Adicionado const no SizedBox
+              const SizedBox(height: 20),
 
               _buildInfoTile("Quilometros Totais", "20.3 km", context),
-              SizedBox(height: 12.h),
+              // CORREÇÃO: Adicionado const no SizedBox
+              const SizedBox(height: 12),
               _buildInfoTile("Tempo Médio de Resposta", "13s", context),
               
-              SizedBox(height: 10.h), 
+              const SizedBox(height: 10), 
             ],
           ),
         ),
@@ -84,8 +90,8 @@ class DashboardScreen extends StatelessWidget {
     
     return LineChart(
       LineChartData(
-        gridData: FlGridData(show: false),
-        titlesData: FlTitlesData(show: false),
+        gridData: const FlGridData(show: false),
+        titlesData: const FlTitlesData(show: false),
         borderData: FlBorderData(show: false),
         lineBarsData: [
           LineChartBarData(
@@ -94,13 +100,14 @@ class DashboardScreen extends StatelessWidget {
             color: primary,
             barWidth: 4.w,
             isStrokeCapRound: true,
-            dotData: FlDotData(show: false),
+            dotData: const FlDotData(show: false),
             belowBarData: BarAreaData(
               show: true,
               gradient: LinearGradient(
                 colors: [
-                  primary.withOpacity(0.5),
-                  primary.withOpacity(0.0),
+                  // CORREÇÃO: withOpacity -> withValues
+                  primary.withValues(alpha: 0.5),
+                  primary.withValues(alpha: 0.0),
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,

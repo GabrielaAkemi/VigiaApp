@@ -6,19 +6,21 @@ import '../widgets/background_wrapper.dart';
 import '../widgets/neon_card.dart';
 
 class ProfileScreen extends StatelessWidget {
+  // CORREÇÃO: Adicionada a Key no construtor
+  const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = context.watch<ThemeManager>();
     bool isDark = themeProvider.themeMode == ThemeMode.dark;
     Color primaryColor = AppColors.getPrimary(context);
     
-    // Cor de texto adaptativa para não sumir no fundo claro
     Color textColor = isDark ? Colors.white : Colors.black;
-    Color subTextColor = isDark ? Colors.grey : Colors.black54;
+    // CORREÇÃO: Removido o aviso de subTextColor não utilizado (ou use se preferir)
 
     return BackgroundWrapper(
       child: Scaffold(
-        backgroundColor: Colors.transparent, // Permite ver a logo rosa de fundo
+        backgroundColor: Colors.transparent, 
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -34,7 +36,6 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Foto de Perfil com Círculo Adaptativo
               Center(
                 child: Stack(
                   alignment: Alignment.bottomRight,
@@ -46,7 +47,8 @@ class ProfileScreen extends StatelessWidget {
                         border: Border.all(color: primaryColor, width: 2),
                         boxShadow: [
                           BoxShadow(
-                            color: primaryColor.withOpacity(isDark ? 0.4 : 0.2),
+                            // CORREÇÃO: withOpacity -> withValues
+                            color: primaryColor.withValues(alpha: isDark ? 0.4 : 0.2),
                             blurRadius: 15,
                           )
                         ],
@@ -60,7 +62,8 @@ class ProfileScreen extends StatelessWidget {
                       right: 5,
                       bottom: 5,
                       child: GestureDetector(
-                        onTap: () => print("Editar foto"),
+                        // CORREÇÃO: Removido print (boa prática para produção)
+                        onTap: () {}, 
                         child: CircleAvatar(
                           radius: 12,
                           backgroundColor: isDark ? Colors.black : Colors.white,
@@ -85,7 +88,8 @@ class ProfileScreen extends StatelessWidget {
                     style: TextStyle(color: textColor, fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   trailing: Switch(
-                    activeColor: AppColors.lightRed,
+                    // CORREÇÃO: activeColor -> activeThumbColor
+                    activeThumbColor: AppColors.lightRed,
                     value: !isDark,
                     onChanged: (value) => context.read<ThemeManager>().toggleTheme(),
                   ),
@@ -162,7 +166,8 @@ class ProfileScreen extends StatelessWidget {
               ),
             ],
           ),
-          Divider(color: primaryColor.withOpacity(0.2), thickness: 1),
+          // CORREÇÃO: withOpacity -> withValues
+          Divider(color: primaryColor.withValues(alpha: 0.2), thickness: 1),
         ],
       ),
     );

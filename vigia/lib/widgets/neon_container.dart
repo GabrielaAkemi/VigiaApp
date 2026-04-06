@@ -24,12 +24,14 @@ class NeonContainer extends StatelessWidget {
         color: AppColors.getCardColor(context),
         borderRadius: BorderRadius.circular(borderRadius),
         border: Border.all(
-          color: primaryColor.withOpacity(0.8), 
+          // ATUALIZADO: Substituído withOpacity por withValues
+          color: primaryColor.withValues(alpha: 0.8), 
           width: 1.5
         ),
         boxShadow: [
           BoxShadow(
-            color: primaryColor.withOpacity(isDark ? 0.5 : 0.2),
+            // ATUALIZADO: Substituído withOpacity por withValues
+            color: primaryColor.withValues(alpha: isDark ? 0.5 : 0.2),
             blurRadius: isDark ? 10 : 6,
             spreadRadius: 1,
           ),

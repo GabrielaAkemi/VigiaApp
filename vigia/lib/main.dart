@@ -64,8 +64,8 @@ class VigiaApp extends StatelessWidget {
           home: child,
         );
       },
-      // Definimos a tela inicial fora do builder para otimização
-      child: LoginScreen(),
+      // CORREÇÃO: Adicionado 'const' aqui para melhorar a performance
+      child: const LoginScreen(),
     );
   }
 }

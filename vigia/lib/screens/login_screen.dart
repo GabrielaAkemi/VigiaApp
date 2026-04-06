@@ -6,6 +6,9 @@ import '../widgets/background_wrapper.dart';
 import 'main_navigation.dart';
 
 class LoginScreen extends StatelessWidget {
+  // CORREÇÃO: Adicionada a named key ao construtor
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
@@ -29,7 +32,8 @@ class LoginScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     shadows: [
                       Shadow(
-                        color: primaryColor.withOpacity(0.8), 
+                        // CORREÇÃO: withOpacity -> withValues
+                        color: primaryColor.withValues(alpha: 0.8), 
                         blurRadius: isDark ? 20.r : 10.r
                       )
                     ],
@@ -45,7 +49,8 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => MainNavigation()),
+                      // CORREÇÃO: Adicionado const no MainNavigation
+                      MaterialPageRoute(builder: (context) => const MainNavigation()),
                     );
                   }
                 ),
@@ -79,7 +84,8 @@ class LoginScreen extends StatelessWidget {
             color: isDark ? AppColors.darkDeepRed : Colors.white,
             borderRadius: BorderRadius.circular(15.r),
             border: Border.all(
-              color: AppColors.getPrimary(context).withOpacity(0.5)
+              // CORREÇÃO: withOpacity -> withValues
+              color: AppColors.getPrimary(context).withValues(alpha: 0.5)
             ),
           ),
           child: TextField(

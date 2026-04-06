@@ -24,5 +24,6 @@ class AppColors {
   static Color getCardColor(BuildContext context) =>
       Theme.of(context).brightness == Brightness.dark 
           ? const Color(0xFF140D10) 
-          : Colors.white.withOpacity(0.7);
+          // CORREÇÃO: withOpacity -> withValues para o Flutter 3.11+
+          : Colors.white.withValues(alpha: 0.7);
 }

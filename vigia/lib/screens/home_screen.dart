@@ -8,6 +8,9 @@ import '../widgets/neon_card.dart';
 import '../widgets/neon_typewriter.dart';
 
 class HomeScreen extends StatelessWidget {
+  // CORREÇÃO: Adicionada a named key ao construtor
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
@@ -31,7 +34,8 @@ class HomeScreen extends StatelessWidget {
                   fontSize: 38.sp,
                   letterSpacing: 4,
                   shadows: [
-                    Shadow(color: primary.withOpacity(0.7), blurRadius: 15.r),
+                    // CORREÇÃO: withOpacity -> withValues
+                    Shadow(color: primary.withValues(alpha: 0.7), blurRadius: 15.r),
                   ],
                 ),
               ),
@@ -55,7 +59,7 @@ class HomeScreen extends StatelessWidget {
               child: IconButton(
                 icon: Icon(Icons.notifications_none, color: primary, size: 28.r),
                 onPressed: () {
-                  print("Notificações clicadas");
+                  // CORREÇÃO: Removido print para evitar aviso de produção
                 },
               ),
             )
@@ -87,20 +91,18 @@ class HomeScreen extends StatelessWidget {
               
               SizedBox(height: 30.h),
               
-              // BOTÃO INICIAR: Agora com print para debug no console
               _buildActionButton(
                 "INICIAR ROTA", 
                 context, 
                 onTap: () {
-                  print("Botão Iniciar Rota pressionado!");
                   context.read<ThemeManager>().setIndex(1);
                 },
               ),
               
               SizedBox(height: 15.h),
-              _buildActionButton("PAUSAR", context, onTap: () => print("Pausar")),
+              _buildActionButton("PAUSAR", context, onTap: () {}),
               SizedBox(height: 15.h),
-              _buildActionButton("ENCERRAR ROTA", context, onTap: () => print("Encerrar")),
+              _buildActionButton("ENCERRAR ROTA", context, onTap: () {}),
             ],
           ),
         ),
@@ -132,7 +134,7 @@ class HomeScreen extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 5.h),
       child: GestureDetector(
         onTap: onTap,
-        behavior: HitTestBehavior.opaque, // GARANTE QUE O CLIQUE FUNCIONE EM TODA A ÁREA
+        behavior: HitTestBehavior.opaque,
         child: Container(
           width: double.infinity,
           height: 55.h,
@@ -140,7 +142,8 @@ class HomeScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(15.r),
             border: Border.all(color: primary, width: 2.w),
             boxShadow: [
-              BoxShadow(color: primary.withOpacity(0.2), blurRadius: 10.r),
+              // CORREÇÃO: withOpacity -> withValues
+              BoxShadow(color: primary.withValues(alpha: 0.2), blurRadius: 10.r),
             ],
           ),
           child: Center(
