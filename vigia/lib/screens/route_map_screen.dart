@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'; 
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:flutter_screenutil/flutter_screenutil.dart'; 
 import '../core/app_colors.dart';
 import '../widgets/background_wrapper.dart';
 import '../widgets/neon_card.dart';
@@ -23,12 +24,10 @@ class _RouteMapScreenState extends State<RouteMapScreen> with TickerProviderStat
   final LatLng destino = const LatLng(-22.2150, -49.9550);
 
   List<LatLng> pontosRota = [];
-  List<dynamic> passosDaRota = [];
   LatLng? posicaoAtual;
   double rotacaoAnimada = 0.0;
   double rotacaoCarro = 0.0;
   int indicePontoAtual = 0;
-  int indicePassoAtual = 0;
 
   String tempoRestante = "Calculando...";
   String passageiroAtual = "ANNA S.";
@@ -42,26 +41,24 @@ class _RouteMapScreenState extends State<RouteMapScreen> with TickerProviderStat
   void initState() {
     super.initState();
     posicaoAtual = origem;
+    
+    // Deixa a barra de status transparente para o mapa preencher tudo
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light, 
+    ));
+
     _animController = AnimationController(vsync: this);
 
     _animController.addListener(() {
       if (_animacaoPosicao == null) return;
-      
       double diferenca = rotacaoCarro - rotacaoAnimada;
-      
-      while (diferenca <= -180) {
-        diferenca += 360;
-      }
-      while (diferenca > 180) {
-        diferenca -= 360;
-      }
-      
+      while (diferenca <= -180) { diferenca += 360; }
+      while (diferenca > 180) { diferenca -= 360; }
       rotacaoAnimada += diferenca * 0.08;
-
       setState(() {
         posicaoAtual = _animacaoPosicao!.value;
       });
-
       _mapController.moveAndRotate(posicaoAtual!, 18.0, 360 - rotacaoAnimada);
     });
 
@@ -82,7 +79,6 @@ class _RouteMapScreenState extends State<RouteMapScreen> with TickerProviderStat
         final List coords = rota['geometry']['coordinates'];
         setState(() {
           pontosRota = coords.map((c) => LatLng(c[1], c[0])).toList();
-          passosDaRota = rota['legs'][0]['steps'];
           tempoRestante = "${(rota['duration'] / 60).toStringAsFixed(0)} MIN";
         });
         _irParaProximoPonto();
@@ -120,14 +116,13 @@ class _RouteMapScreenState extends State<RouteMapScreen> with TickerProviderStat
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
+    Color titleColor = isDark ? Colors.white : Colors.black87;
+    Color subtitleColor = isDark ? Colors.grey : Colors.black54;
 
     return BackgroundWrapper(
       child: Scaffold(
+        extendBodyBehindAppBar: true, 
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          ),
         body: Stack(
           children: [
             FlutterMap(
@@ -149,7 +144,7 @@ class _RouteMapScreenState extends State<RouteMapScreen> with TickerProviderStat
                     polylines: [
                       Polyline(
                         points: pontosRota,
-                        strokeWidth: 5,
+                        strokeWidth: 5.w,
                         color: AppColors.getPrimary(context).withValues(alpha: 0.8),
                       ),
                     ],
@@ -158,9 +153,9 @@ class _RouteMapScreenState extends State<RouteMapScreen> with TickerProviderStat
                   markers: [
                     Marker(
                       point: posicaoAtual ?? origem,
-                      width: 40,
-                      height: 40,
-                      child: Icon(Icons.navigation, color: AppColors.getPrimary(context), size: 35),
+                      width: 40.w,
+                      height: 40.h,
+                      child: Icon(Icons.navigation, color: AppColors.getPrimary(context), size: 30.sp),
                     ),
                   ],
                 ),
@@ -168,32 +163,50 @@ class _RouteMapScreenState extends State<RouteMapScreen> with TickerProviderStat
             ),
 
             Positioned(
-              top: 20,
-              left: 20,
-              right: 20,
+              top: 50.h, 
+              left: 20.w,
+              right: 20.w,
               child: NeonCard(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _buildMapStat("PRÓXIMA PARADA", tempoRestante),
-                    _buildMapStat("PASSAGEIRO", passageiroAtual),
-                  ],
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildMapStat("PRÓXIMA PARADA", tempoRestante, titleColor, subtitleColor),
+                      _buildMapStat("PASSAGEIRO", passageiroAtual, titleColor, subtitleColor),
+                    ],
+                  ),
                 ),
               ),
             ),
+            // A SETA QUE LEVAVA "A NADA" FOI REMOVIDA DAQUI
           ],
         ),
       ),
     );
   }
 
-  Widget _buildMapStat(String label, String value) {
+  Widget _buildMapStat(String label, String value, Color titleColor, Color subtitleColor) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(label, style: const TextStyle(color: Colors.grey, fontSize: 10)),
-        Text(value, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        Text(
+          label, 
+          style: TextStyle(
+            color: subtitleColor, 
+            fontSize: 9.sp, 
+            fontWeight: FontWeight.w600
+          )
+        ),
+        Text(
+          value, 
+          style: TextStyle(
+            color: titleColor, 
+            fontWeight: FontWeight.bold, 
+            fontSize: 13.sp 
+          )
+        ),
       ],
     );
   }
