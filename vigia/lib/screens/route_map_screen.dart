@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; 
+import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_screenutil/flutter_screenutil.dart'; 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../core/app_colors.dart';
 import '../widgets/background_wrapper.dart';
 import '../widgets/neon_card.dart';
@@ -19,7 +19,7 @@ class RouteMapScreen extends StatefulWidget {
 }
 
 class _RouteMapScreenState extends State<RouteMapScreen> with TickerProviderStateMixin {
-  final String ipServidor = '127.0.0.1'; 
+  final String ipServidor = '127.0.0.1';
   final LatLng origem = const LatLng(-22.2208, -49.9486);
   final LatLng destino = const LatLng(-22.2150, -49.9550);
 
@@ -41,11 +41,11 @@ class _RouteMapScreenState extends State<RouteMapScreen> with TickerProviderStat
   void initState() {
     super.initState();
     posicaoAtual = origem;
-    
-    // Deixa a barra de status transparente para o mapa preencher tudo
+
+    // Configura a barra de status transparente
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light, 
+      statusBarIconBrightness: Brightness.light,
     ));
 
     _animController = AnimationController(vsync: this);
@@ -83,8 +83,8 @@ class _RouteMapScreenState extends State<RouteMapScreen> with TickerProviderStat
         });
         _irParaProximoPonto();
       }
-    } catch (e) { 
-      debugPrint("Erro OSRM: $e"); 
+    } catch (e) {
+      debugPrint("Erro OSRM: $e");
     }
   }
 
@@ -121,11 +121,13 @@ class _RouteMapScreenState extends State<RouteMapScreen> with TickerProviderStat
 
     return BackgroundWrapper(
       child: Scaffold(
-        extendBodyBehindAppBar: true, 
+        extendBodyBehindAppBar: true,
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
             FlutterMap(
+              // A KEY ValueKey(isDark) faz o mapa "reiniciar" e carregar a cor certa na hora
+              key: ValueKey(isDark),
               mapController: _mapController,
               options: MapOptions(
                 initialCenter: origem,
@@ -134,9 +136,9 @@ class _RouteMapScreenState extends State<RouteMapScreen> with TickerProviderStat
               ),
               children: [
                 TileLayer(
-                  urlTemplate: isDark 
-                    ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
-                    : 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
+                  urlTemplate: isDark
+                      ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
+                      : 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
                   subdomains: const ['a', 'b', 'c', 'd'],
                 ),
                 if (pontosRota.isNotEmpty)
@@ -162,8 +164,9 @@ class _RouteMapScreenState extends State<RouteMapScreen> with TickerProviderStat
               ],
             ),
 
+            // Card de Status do Topo
             Positioned(
-              top: 50.h, 
+              top: 50.h,
               left: 20.w,
               right: 20.w,
               child: NeonCard(
@@ -179,7 +182,6 @@ class _RouteMapScreenState extends State<RouteMapScreen> with TickerProviderStat
                 ),
               ),
             ),
-            // A SETA QUE LEVAVA "A NADA" FOI REMOVIDA DAQUI
           ],
         ),
       ),
@@ -192,20 +194,20 @@ class _RouteMapScreenState extends State<RouteMapScreen> with TickerProviderStat
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          label, 
-          style: TextStyle(
-            color: subtitleColor, 
-            fontSize: 9.sp, 
-            fontWeight: FontWeight.w600
-          )
+            label,
+            style: TextStyle(
+                color: subtitleColor,
+                fontSize: 9.sp,
+                fontWeight: FontWeight.w600
+            )
         ),
         Text(
-          value, 
-          style: TextStyle(
-            color: titleColor, 
-            fontWeight: FontWeight.bold, 
-            fontSize: 13.sp 
-          )
+            value,
+            style: TextStyle(
+                color: titleColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 13.sp
+            )
         ),
       ],
     );
@@ -216,7 +218,7 @@ class LatLngTween extends Tween<LatLng> {
   LatLngTween({required super.begin, required super.end});
   @override
   LatLng lerp(double t) => LatLng(
-    begin!.latitude + (end!.latitude - begin!.latitude) * t, 
-    begin!.longitude + (end!.longitude - begin!.longitude) * t
+      begin!.latitude + (end!.latitude - begin!.latitude) * t,
+      begin!.longitude + (end!.longitude - begin!.longitude) * t
   );
 }
