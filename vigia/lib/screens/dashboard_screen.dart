@@ -10,6 +10,8 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
+
+    // Cores dinâmicas para títulos e textos
     Color sectionTitleColor = isDark ? Colors.white : Colors.black87;
     Color appBarTextColor = isDark ? Colors.white : Colors.black;
 
@@ -33,13 +35,14 @@ class DashboardScreen extends StatelessWidget {
           padding: EdgeInsets.all(20.r),
           child: Column(
             children: [
+              /// 🚑 STATS GRID (Ajustado para evitar overflow)
               GridView.count(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 crossAxisCount: 2,
                 crossAxisSpacing: 15,
                 mainAxisSpacing: 15,
-                childAspectRatio: 1.5,
+                childAspectRatio: 1.35, // Aumentado o espaço vertical (de 1.5 para 1.35)
                 children: [
                   _statCard("Rotas Hoje", "9", Icons.route, Colors.blue, sectionTitleColor),
                   _statCard("Passageiros", "18", Icons.people, Colors.cyan, sectionTitleColor),
@@ -47,22 +50,32 @@ class DashboardScreen extends StatelessWidget {
                   _statCard("Avaliação", "4.8", Icons.star, Colors.purple, sectionTitleColor),
                 ],
               ),
+
               SizedBox(height: 25.h),
+
+              /// 📈 ROTAS DA SEMANA
               _buildChartSection("Rotas da Semana", _lineChart(), sectionTitleColor),
+
               SizedBox(height: 20.h),
+
+              /// 🟠 STATUS DAS ROTAS (Donut Chart)
               _buildChartSection(
-                "Status das Rotas", 
-                Column(
-                  children: [
-                    SizedBox(height: 160.h, child: _pieChart()),
-                    SizedBox(height: 15.h),
-                    _buildPieLegend(isDark),
-                  ],
-                ), 
-                sectionTitleColor
+                  "Status das Rotas",
+                  Column(
+                    children: [
+                      SizedBox(height: 160.h, child: _pieChart()),
+                      SizedBox(height: 15.h),
+                      _buildPieLegend(isDark),
+                    ],
+                  ),
+                  sectionTitleColor
               ),
+
               SizedBox(height: 20.h),
+
+              /// ⭐ AVALIAÇÕES
               _buildChartSection("Avaliações dos Passageiros", _barChart(), sectionTitleColor),
+
               SizedBox(height: 20.h),
             ],
           ),
@@ -71,6 +84,7 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
+  /// Helper para criar seções de gráficos
   Widget _buildChartSection(String title, Widget chart, Color textColor) {
     return NeonCard(
       padding: EdgeInsets.all(20.r),
@@ -79,7 +93,11 @@ class DashboardScreen extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(color: textColor, fontSize: 14.sp, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: textColor,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.bold
+            ),
           ),
           SizedBox(height: 20.h),
           chart,
@@ -88,26 +106,47 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
+  /// 📦 CARD DE ESTATÍSTICA (Ajustado com FittedBox e Padding)
   Widget _statCard(String title, String value, IconData icon, Color color, Color titleTextColor) {
     return NeonCard(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: color, size: 26),
-          const SizedBox(height: 6),
-          Text(
-            value,
-            style: TextStyle(color: color, fontSize: 22.sp, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            title, 
-            style: TextStyle(color: titleTextColor.withValues(alpha: 0.7), fontSize: 11.sp, fontWeight: FontWeight.w500)
-          ),
-        ],
+      child: Padding(
+        padding: EdgeInsets.all(8.r),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: color, size: 24.sp),
+            SizedBox(height: 4.h),
+
+            // FittedBox impede que números grandes quebrem o layout
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                value,
+                style: TextStyle(
+                    color: color,
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+            ),
+
+            Text(
+                title,
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                style: TextStyle(
+                    color: titleTextColor.withValues(alpha: 0.7),
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.w500
+                )
+            ),
+          ],
+        ),
       ),
     );
   }
 
+  /// 📈 GRÁFICO DE LINHA
   Widget _lineChart() {
     return SizedBox(
       height: 180.h,
@@ -141,6 +180,7 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
+  /// 🥧 GRÁFICO DE PIZZA (DONUT)
   Widget _pieChart() {
     return PieChart(
       PieChartData(
@@ -155,6 +195,7 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
+  /// LEGENDA DO GRÁFICO DE PIZZA
   Widget _buildPieLegend(bool isDark) {
     Color labelColor = isDark ? Colors.white70 : Colors.black87;
     return Row(
@@ -170,13 +211,14 @@ class DashboardScreen extends StatelessWidget {
   Widget _legendItem(String text, Color color, Color textColor) {
     return Row(
       children: [
-        Container(width: 10, height: 10, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
-        const SizedBox(width: 6), // ADICIONADO: const
+        Container(width: 8.r, height: 8.r, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
+        SizedBox(width: 6.w),
         Text(text, style: TextStyle(color: textColor, fontSize: 10.sp)),
       ],
     );
   }
 
+  /// 📊 GRÁFICO DE BARRAS
   Widget _barChart() {
     return SizedBox(
       height: 180.h,
@@ -186,11 +228,11 @@ class DashboardScreen extends StatelessWidget {
           titlesData: const FlTitlesData(show: false),
           gridData: const FlGridData(show: false),
           barGroups: [
-            BarChartGroupData(x: 1, barRods: [BarChartRodData(toY: 2, color: Colors.red, width: 15, borderRadius: BorderRadius.circular(4))]),
-            BarChartGroupData(x: 2, barRods: [BarChartRodData(toY: 4, color: Colors.orange, width: 15, borderRadius: BorderRadius.circular(4))]),
-            BarChartGroupData(x: 3, barRods: [BarChartRodData(toY: 6, color: Colors.yellow, width: 15, borderRadius: BorderRadius.circular(4))]),
-            BarChartGroupData(x: 4, barRods: [BarChartRodData(toY: 12, color: Colors.green, width: 15, borderRadius: BorderRadius.circular(4))]),
-            BarChartGroupData(x: 5, barRods: [BarChartRodData(toY: 20, color: Colors.blue, width: 15, borderRadius: BorderRadius.circular(4))]),
+            BarChartGroupData(x: 1, barRods: [BarChartRodData(toY: 2, color: Colors.red, width: 12.w, borderRadius: BorderRadius.circular(4))]),
+            BarChartGroupData(x: 2, barRods: [BarChartRodData(toY: 4, color: Colors.orange, width: 12.w, borderRadius: BorderRadius.circular(4))]),
+            BarChartGroupData(x: 3, barRods: [BarChartRodData(toY: 6, color: Colors.yellow, width: 12.w, borderRadius: BorderRadius.circular(4))]),
+            BarChartGroupData(x: 4, barRods: [BarChartRodData(toY: 12, color: Colors.green, width: 12.w, borderRadius: BorderRadius.circular(4))]),
+            BarChartGroupData(x: 5, barRods: [BarChartRodData(toY: 20, color: Colors.blue, width: 12.w, borderRadius: BorderRadius.circular(4))]),
           ],
         ),
       ),
