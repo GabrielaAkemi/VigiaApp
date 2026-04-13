@@ -4,7 +4,7 @@ O **Vigia** é um aplicativo mobile desenvolvido em Flutter focado no monitorame
 
 ---
 
-## 🚀 Funcionalidades
+##  Funcionalidades
 
 ✨ **Dashboard Inteligente**
 Visualização de estatísticas diárias (rotas, passageiros, atrasos e avaliações) com gráficos dinâmicos.
@@ -20,38 +20,38 @@ Animações suaves de rotas com rotação automática do ícone de navegação.
 
 ---
 
-## 📦 Como rodar o projeto
+##  Como rodar o projeto
 
-### 🔧 Pré-requisitos
+###  Pré-requisitos
 
 * Flutter SDK instalado
 * Servidor OSRM rodando (local ou remoto)
 
-### 📥 Clone o repositório
+###  Clone o repositório
 
 ```bash
 git clone https://github.com/seu-usuario/VigiaApp2.0.git
 ```
 
-### 📂 Acesse a pasta
+###  Acesse a pasta
 
 ```bash
 cd vigia
 ```
 
-### 📦 Instale as dependências
+###  Instale as dependências
 
 ```bash
 flutter pub get
 ```
 
-### 🎨 Gere os ícones do app
+###  Gere os ícones do app
 
 ```bash
 flutter pub run flutter_launcher_icons
 ```
 
-### ▶️ Execute o projeto
+###  Execute o projeto
 
 ```bash
 flutter run
